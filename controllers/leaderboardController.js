@@ -3,7 +3,6 @@ import Leaderboard from "../models/leaderboard.js";
 // get leaderboard table
 export const getLeaderboard = async (req, res) => {
   try {
-    console.log(">>>>>>>> I can reach that point in the backend!!")
     const leaderboard = await Leaderboard.find().sort({ score: -1 }).limit(10);
     res.json(leaderboard);
   } catch (error) {
