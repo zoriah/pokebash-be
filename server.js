@@ -9,11 +9,16 @@ const port = process.env.PORT || 8000;
 await dbInit();
 
 app.use(express.json());
-
+const ALLOWED_ORIGINS = [
+  "https://earnest-naiad-9fb268.netlify.app",
+  "http://localhost:5173",
+];
 app.use(
   cors({
-    origin: "https://earnest-naiad-9fb268.netlify.app",
-    // origin: 'http://localhost:5173',
+    origin: (origin, cb) => {
+      if (!origin || ALLOWED_ORIGINS.includes(origin)) cb(null, true);
+      else cb(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   })
 );
